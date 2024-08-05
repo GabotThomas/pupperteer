@@ -42,7 +42,8 @@ async function launchBrowser() {
             defaultViewport: {
                 width: 595,
                 height: 842
-            }
+            },
+            protocolTimeout: 10000
         });
         console.log('Browser launched');
         console.timeEnd('Browser launched in');
