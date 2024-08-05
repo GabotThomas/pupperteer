@@ -28,7 +28,7 @@ app.get('/pdf', express.json({ limit: '20mb' }), async (req, res) => {
   headers.set('Content-Length', pdfBuffer.byteLength.toString());
 
   res.writeHead(200, headers);
-  res.end(pdfBuffer);
+  res.send(pdfBuffer);
 });
 
 async function generatePDF(url){
