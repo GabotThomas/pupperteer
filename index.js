@@ -43,13 +43,16 @@ async function launchBrowser() {
                 width: 595,
                 height: 842
             },
-            protocolTimeout: 10000
+            protocolTimeout: 20000
         });
+
         console.log('Browser launched');
         console.timeEnd('Browser launched in');
     }else{
         console.log('Browser already launched');
     }
+
+
 }
 
 async function generatePDF(url){
@@ -57,6 +60,7 @@ async function generatePDF(url){
         console.log('Generating PDF...');
         console.time('PDF generated in');
         await launchBrowser();
+        console.log(browser.debugInfo);
         console.time('Page created in');
         const page = await browser.newPage();
         console.log('Page created');
