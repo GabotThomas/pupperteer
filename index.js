@@ -40,7 +40,8 @@ async function generatePDF(url){
         const browser = await puppeteer.launch(
             {
                 handleSIGHUP: false,
-                handleSIGTERM: false
+                handleSIGTERM: false,
+                args: ['--no-sandbox', '--disable-setuid-sandbox']
             }
         );
         const page = await browser.newPage();
