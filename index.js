@@ -47,7 +47,7 @@ async function generatePDF(url){
                     "--single-process",
                     "--no-zygote"
                 ],
-                executablePath: '/usr/bin/google-chrome-stable',
+                // executablePath: '/usr/bin/chromium-browser',
                 headless: true,
                 timeout: 0
             }
