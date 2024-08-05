@@ -31,21 +31,31 @@ app.get('/pdf', express.json({ limit: '20mb' }), async (req, res) => {
     res.send('PDF generated');
 });
 
+let browser;
+
+async function launchBrowser() {
+    if (!browser) {
+        console.time('Browser launched in');
+        browser = await puppeteer.launch({
+            headless: true,
+            args: ['--no-sandbox', '--disable-setuid-sandbox'],
+            defaultViewport: {
+                width: 595,
+                height: 842
+            }
+        });
+        console.log('Browser launched');
+        console.timeEnd('Browser launched in');
+    }else{
+        console.log('Browser already launched');
+    }
+}
+
 async function generatePDF(url){
     try{	
         console.log('Generating PDF...');
         console.time('PDF generated in');
-        console.time('Browser launched in');
-        const browser = await puppeteer.launch(
-            {
-                handleSIGHUP: false,
-                handleSIGTERM: false,
-                args: ['--no-sandbox', '--disable-setuid-sandbox'],
-                headless: true
-            }
-        );
-        console.log('Browser launched');
-        console.timeEnd('Browser launched in');
+        await launchBrowser();
         console.time('Page created in');
         const page = await browser.newPage();
         console.log('Page created');
@@ -56,7 +66,6 @@ async function generatePDF(url){
         console.log('PDF generated');
         await browser.close();
         console.log('Browser closed');
-        
         console.timeEnd('PDF generated in');
 
         return pdfBuffer;
