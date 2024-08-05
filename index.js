@@ -1,7 +1,7 @@
 
 const express = require('express');
 const puppeteer = require('puppeteer');
-const pupperteerCore = require('puppeteer-core');
+// const pupperteerCore = require('puppeteer-core');
 
 const app = express();
 
@@ -44,10 +44,15 @@ async function generatePDF(url){
                 args: ['--no-sandbox', '--disable-setuid-sandbox']
             }
         );
+        console.log('Browser launched');
         const page = await browser.newPage();
+        console.log('Page created');
         await page.goto(url);
+        console.log('Page loaded');
         const pdfBuffer = await page.pdf({ format: 'A4' });
+        console.log('PDF generated');
         await browser.close();
+        console.log('Browser closed');
         
         console.timeEnd('PDF generated in');
 
