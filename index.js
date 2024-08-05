@@ -14,8 +14,6 @@ app.get('/', (req , res) => {
 
 
 app.get('/pdf', express.json({ limit: '20mb' }), async (req, res) => {
-
-    await timer(10000);
     try{
         const pdfBuffer = await generatePDF(
             'https://www.frenchdetailers.com/company/e981b783-0d45-47fc-b8d6-0d718e190a4e'
@@ -37,6 +35,7 @@ async function generatePDF(url){
     try{	
         console.log('Generating PDF...');
         console.time('PDF generated in');
+        console.time('Browser launched in');
         const browser = await puppeteer.launch(
             {
                 handleSIGHUP: false,
@@ -45,8 +44,11 @@ async function generatePDF(url){
             }
         );
         console.log('Browser launched');
+        console.timeEnd('Browser launched in');
+        console.time('Page created in');
         const page = await browser.newPage();
         console.log('Page created');
+        console.timeEnd('Page created in');
         await page.goto(url);
         console.log('Page loaded');
         const pdfBuffer = await page.pdf({ format: 'A4' });
