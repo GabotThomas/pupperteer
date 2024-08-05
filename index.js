@@ -38,18 +38,10 @@ async function generatePDF(url){
         console.time('Browser launched in');
         const browser = await puppeteer.launch(
             {
-                // handleSIGHUP: false,
-                // handleSIGTERM: false,
-                args: [
-                    '--no-sandbox', 
-                    '--disable-setuid-sandbox', 
-                    "--disable-dev-shm-usage",
-                    "--single-process",
-                    "--no-zygote"
-                ],
-                // executablePath: '/usr/bin/chromium-browser',
-                headless: true,
-                timeout: 0
+                handleSIGHUP: false,
+                handleSIGTERM: false,
+                args: ['--no-sandbox', '--disable-setuid-sandbox'],
+                headless: true
             }
         );
         console.log('Browser launched');
