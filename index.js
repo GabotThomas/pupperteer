@@ -43,7 +43,8 @@ async function launchBrowser() {
                 width: 595,
                 height: 842
             },
-            protocolTimeout: 20000
+            protocolTimeout: 20000,
+            dumpio: true,
         });
 
         console.log('Browser launched');
@@ -60,14 +61,21 @@ async function generatePDF(url){
         console.log('Generating PDF...');
         console.time('PDF generated in');
         await launchBrowser();
-        console.log(browser.debugInfo);
+
         console.time('Page created in');
         const page = await browser.newPage();
+        // Capture les erreurs de console de la page
+        page.on('console', msg => console.log('PAGE LOG:', msg.text()));
+        page.on('pageerror', err => console.log('PAGE ERROR:', err.message));
         console.log('Page created');
         console.timeEnd('Page created in');
-        await page.goto(url);
+
+
+        await page.goto(url, { waitUntil: 'networkidle2', timeout: 5000 });
         console.log('Page loaded');
+
         const pdfBuffer = await page.pdf({ format: 'A4' });
+
         console.log('PDF generated');
         await browser.close();
         console.log('Browser closed');
@@ -76,10 +84,18 @@ async function generatePDF(url){
         return pdfBuffer;
     }
     catch(e){
-        console.log(e);
+        console.error('Error taking screenshot:', error);
         throw e;
     }
 }
+
+// Fermer le navigateur proprement en cas d'arrêt du serveur
+process.on('SIGINT', async () => {
+    if (browser) {
+        await browser.close();
+    }
+    process.exit();
+});
 
 async function timer(ms) {
 	return new Promise(res => setTimeout(res, ms));
