@@ -38,7 +38,14 @@ async function launchBrowser() {
         console.time('Browser launched in');
         browser = await puppeteer.launch({
             headless: true,
-            args: ['--no-sandbox', '--disable-setuid-sandbox'],
+            args: [
+                '--no-sandbox', 
+                '--disable-setuid-sandbox',
+                '--disable-gpu',
+                '--no-zygote',
+                '--disable-software-rasterizer',
+                '--disable-features=site-per-process',
+            ],
             defaultViewport: {
                 width: 595,
                 height: 842
