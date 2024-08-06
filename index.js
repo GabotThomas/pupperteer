@@ -35,7 +35,6 @@ let browser;
 
 async function launchBrowser() {
     if (!browser) {
-        console.time('Browser launched in');
         browser = await puppeteer.launch({
             headless: true,
             args: [
@@ -56,7 +55,6 @@ async function launchBrowser() {
         });
 
         console.log('Browser launched');
-        console.timeEnd('Browser launched in');
     }else{
         console.log('Browser already launched');
     }
@@ -67,16 +65,14 @@ async function launchBrowser() {
 async function generatePDF(url){
     try{	
         console.log('Generating PDF...');
-        console.time('PDF generated in');
         await launchBrowser();
 
-        console.time('Page created in');
         const page = await browser.newPage();
         // Capture les erreurs de console de la page
         page.on('console', msg => console.log('PAGE LOG:', msg.text()));
         page.on('pageerror', err => console.log('PAGE ERROR:', err.message));
         console.log('Page created');
-        console.timeEnd('Page created in');
+
 
 
         await page.goto(url, { waitUntil: 'networkidle2', timeout: 5000 });
@@ -87,7 +83,6 @@ async function generatePDF(url){
         console.log('PDF generated');
         await browser.close();
         console.log('Browser closed');
-        console.timeEnd('PDF generated in');
 
         return pdfBuffer;
     }
