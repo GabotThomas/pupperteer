@@ -64,9 +64,9 @@ async function launchBrowser() {
 
 async function generatePDF(url){
     try{	
-        console.log('Generating PDF...');
+        console.log('Generating PDFF...');
         await launchBrowser();
-
+        console.log('New page');
         const page = await browser.newPage();
         // Capture les erreurs de console de la page
         page.on('console', msg => console.log('PAGE LOG:', msg.text()));
