@@ -93,12 +93,12 @@ async function generatePDF(url){
 }
 
 // Fermer le navigateur proprement en cas d'arrêt du serveur
-process.on('SIGINT', async () => {
-    if (browser) {
-        await browser.close();
-    }
-    process.exit();
-});
+// process.on('SIGINT', async () => {
+//     if (browser) {
+//         await browser.close();
+//     }
+//     process.exit();
+// });
 
 async function timer(ms) {
 	return new Promise(res => setTimeout(res, ms));
