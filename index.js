@@ -49,11 +49,13 @@ async function launchBrowser() {
                 width: 595,
                 height: 842
             },
-            protocolTimeout: 20000,
+            protocolTimeout: 10000,
             dumpio: true,
             // executablePath: '/usr/bin/google-chrome',
             ignoreHTTPSErrors: true,
-
+            timeout: 20000,
+            userDataDir: '/tmp',
+            executablePath: '/usr/bin/chromium-browser',
         });
 
         console.log('Browser launched');
