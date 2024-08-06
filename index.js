@@ -54,7 +54,7 @@ async function launchBrowser() {
             // executablePath: '/usr/bin/google-chrome',
             ignoreHTTPSErrors: true,
             timeout: 20000,
-            userDataDir: '/tmp',
+            // userDataDir: '/tmp',
             executablePath: '/usr/bin/chromium-browser',
         });
 
