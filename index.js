@@ -52,6 +52,7 @@ async function launchBrowser() {
             },
             protocolTimeout: 20000,
             dumpio: true,
+            executablePath: '/usr/bin/google-chrome',
         });
 
         console.log('Browser launched');
