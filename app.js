@@ -20,16 +20,15 @@ app.get('/pdf', express.json({ limit: '20mb' }), async (req, res) => {
         const pdfBuffer = await generatePDF(
             'https://www.frenchdetailers.com/company/e981b783-0d45-47fc-b8d6-0d718e190a4e'
         );
+
+        res.set('Content-Type', 'application/pdf');
+        res.set('Content-Disposition', 'attachment; filename="file.pdf"');
+        res.set('Content-Length', pdfBuffer.byteLength.toString());
+    
+        res.end(pdfBuffer);
     }catch(e){
         return res.status(500).send(JSON.stringify(e));
     }
-
-    res.set('Content-Type', 'application/pdf');
-    res.set('Content-Disposition', 'attachment; filename="file.pdf"');
-    res.set('Content-Length', pdfBuffer.byteLength.toString());
-
-    res.end(pdfBuffer);
-    // res.send('PDF generated');
 });
 
 
