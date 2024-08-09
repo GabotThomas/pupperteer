@@ -12,7 +12,7 @@ const page = await browser.newPage();
 try {
     console.log("start");
     // Navigate to the page
-    await page.goto('<https://blog.apify.com>', { waitUntil: 'load', timeout: 60_000 }); // 60 seconds timeout
+    await page.goto('https://blog.apify.com', { waitUntil: 'load', timeout: 60_000 }); // 60 seconds timeout
 
     // Take a screenshot
     await page.screenshot({ path: 'apify.jpeg', fullPage: true });
