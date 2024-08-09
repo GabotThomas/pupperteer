@@ -35,28 +35,34 @@ let browser;
 
 async function launchBrowser() {
     if (!browser) {
-        browser = await puppeteer.launch({
-            headless: true,
-            args: [
-                '--no-sandbox', 
-                '--disable-setuid-sandbox',
-                '--disable-gpu',
-                '--no-zygote',
-                '--disable-software-rasterizer',
-                '--disable-features=site-per-process',
-            ],
-            defaultViewport: {
-                width: 595,
-                height: 842
-            },
-            protocolTimeout: 10000,
-            dumpio: true,
-            // executablePath: '/usr/bin/google-chrome',
-            ignoreHTTPSErrors: true,
-            timeout: 20000,
-            // userDataDir: '/tmp',
-            executablePath: '/usr/bin/chromium-browser',
-        });
+        console.log("gg");
+        try{
+            browser = await puppeteer.launch({
+                headless: true,
+                args: [
+                    '--no-sandbox', 
+                    '--disable-setuid-sandbox',
+                    // '--disable-gpu',
+                    // '--no-zygote',
+                    // '--disable-software-rasterizer',
+                    // '--disable-features=site-per-process',
+                ],
+                defaultViewport: {
+                    width: 595,
+                    height: 842
+                },
+                // protocolTimeout: 10000,
+                dumpio: true,
+                // executablePath: '/usr/bin/google-chrome',
+                ignoreHTTPSErrors: true,
+                timeout: 20000,
+                // userDataDir: '/tmp',
+                // executablePath: '/usr/bin/chromium-browser',
+            });
+        }catch(e){
+            console.error('Error launching browser:', error);
+            throw e;
+        }
 
         console.log('Browser launched');
     }else{
