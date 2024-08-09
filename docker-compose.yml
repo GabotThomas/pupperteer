@@ -1,0 +1,30 @@
+version: '3.7'
+
+services:
+  app:
+    build:
+      context: ./app
+    container_name: node_app
+    restart: always
+    expose:
+      - "3000"
+  
+  nginx:
+    build:
+      context: ./nginx
+    container_name: nginx_proxy
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt
+    depends_on:
+      - app
+
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
