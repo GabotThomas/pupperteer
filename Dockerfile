@@ -45,7 +45,7 @@ WORKDIR /home/apify
 COPY --chown=apify:apify package*.json ./
 
 # Install Puppeteer without downloading bundled Chromium
-RUN npm install puppeteer --no-save
+RUN npm install puppeteer express --no-save
 
 # Copy your Puppeteer script into the Docker image
 COPY --chown=apify:apify . .
